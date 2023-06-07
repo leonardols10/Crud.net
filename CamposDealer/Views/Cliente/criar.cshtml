@@ -1,0 +1,52 @@
+﻿@model List<VendaModel>
+
+<h1>Listagem de Vendas</h1>
+
+<p>
+    @Html.ActionLink("Nova Venda", "Criar")
+</p>
+
+<div class="text-center">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="button" asp-controller="Vendas" asp-action="Criar">Adicionar nova Venda</a>
+    </div>
+
+    <form method="get" action="@Url.Action("Index")">
+        <label>Pesquisar por Nome do Cliente ou Descrição do Produto:</label>
+        <input type="text" name="searchString" value="@ViewBag.CurrentFilter" />
+        <input type="submit" value="Pesquisar" />
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cliente</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Valor Unitário</th>
+                <th>Data da Venda</th>
+                <th>Valor Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var venda in Model)
+            {
+                <tr>
+                    <td>@venda.IdVenda</td>
+                    <td>@venda.Cliente.Nome</td>
+                    <td>@venda.Produto.Descricao</td>
+                    <td>@venda.QtdVenda</td>
+                    <td>@venda.VlrUnitarioVenda</td>
+                    <td>@venda.DthVenda</td>
+                    <td>@venda.VlrTotalVenda</td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", new { id = venda.IdVenda }) |
+                        @Html.ActionLink("Excluir", "ApagarConfirmacao", new { id = venda.IdVenda })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
